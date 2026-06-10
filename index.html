@@ -1,0 +1,1506 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>政大朝聖之旅</title>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --nccu-blue:   #1B3A5C;   /* NCCU forest blue */
+      --nccu-mid:    #2C5F8A;
+      --nccu-light:  #D6E6F2;
+      --nccu-pale:   #F0F6FB;
+      --gold:        #C8A96E;
+      --text:        #1A1A2E;
+      --muted:       #5A6A7A;
+      --white:       #FFFFFF;
+      --serif: "Noto Serif TC", "Georgia", serif;
+      --sans:  "Noto Sans TC", "Helvetica Neue", sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      color: var(--text);
+      background: var(--nccu-pale);
+      line-height: 1.8;
+    }
+
+    /* ── Cover ── */
+    .cover {
+      min-height: 100vh;
+      background: var(--nccu-blue);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 0%, rgba(44,95,138,.5) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 80% 100%, rgba(200,169,110,.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .cover-seal {
+      width: 90px;
+      height: 90px;
+      border: 3px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    .cover-seal span {
+      font-size: 2.2rem;
+    }
+
+    .cover-tag {
+      font-family: var(--sans);
+      font-size: .72rem;
+      letter-spacing: .18em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .cover h1 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 6vw, 3.6rem);
+      color: var(--white);
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .cover h1 span {
+      color: var(--gold);
+    }
+
+    .cover-sub {
+      font-size: clamp(.9rem, 2vw, 1.1rem);
+      color: rgba(255,255,255,.72);
+      margin-bottom: 40px;
+      max-width: 480px;
+    }
+
+    .cover-meta {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
+    .cover-meta-item {
+      text-align: center;
+    }
+
+    .cover-meta-item .label {
+      font-size: .7rem;
+      letter-spacing: .12em;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .cover-meta-item .value {
+      color: var(--white);
+      font-size: .95rem;
+      font-family: var(--serif);
+    }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255,255,255,.5);
+      font-size: .72rem;
+      letter-spacing: .12em;
+      animation: bounce 2s infinite;
+    }
+
+    .scroll-cue::after {
+      content: "↓";
+      font-size: 1.1rem;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ── Section Wrapper ── */
+    .section {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 72px 24px;
+    }
+
+    .section-label {
+      font-size: .72rem;
+      letter-spacing: .2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .section h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      color: var(--nccu-blue);
+      margin-bottom: 24px;
+      line-height: 1.4;
+    }
+
+    .section p {
+      color: var(--muted);
+      margin-bottom: 16px;
+      font-size: 1rem;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--nccu-mid), transparent);
+      margin: 0 auto 64px;
+      max-width: 820px;
+    }
+
+    /* ── Intro Band ── */
+    .intro-band {
+      background: var(--nccu-blue);
+      padding: 64px 24px;
+      text-align: center;
+    }
+
+    .intro-band .inner {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .intro-band .section-label { color: var(--gold); }
+
+    .intro-band h2 {
+      font-family: var(--serif);
+      color: var(--white);
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .intro-band p {
+      color: rgba(255,255,255,.75);
+      font-size: 1rem;
+      line-height: 1.9;
+      margin-bottom: 0;
+    }
+
+    /* ── Pilgrimage Type Card ── */
+    .type-card {
+      background: var(--white);
+      border-left: 4px solid var(--gold);
+      border-radius: 4px;
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 16px rgba(27,58,92,.07);
+    }
+
+    .type-card h3 {
+      font-family: var(--serif);
+      color: var(--nccu-blue);
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+    }
+
+    .type-card p {
+      margin: 0;
+      font-size: .95rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    /* ── Station Timeline ── */
+    .stations {
+      position: relative;
+    }
+
+    .stations::before {
+      content: "";
+      position: absolute;
+      left: 28px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--gold), var(--nccu-mid));
+    }
+
+    .station {
+      display: flex;
+      gap: 28px;
+      margin-bottom: 56px;
+      position: relative;
+    }
+
+    .station-index {
+      flex-shrink: 0;
+      width: 58px;
+      height: 58px;
+      background: var(--nccu-blue);
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .station-index .num {
+      font-family: var(--serif);
+      color: var(--gold);
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .station-index .stop {
+      font-size: .55rem;
+      color: rgba(255,255,255,.5);
+      letter-spacing: .08em;
+    }
+
+    .station-body {
+      flex: 1;
+      background: var(--white);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 20px rgba(27,58,92,.08);
+    }
+
+    .station-header {
+      background: var(--nccu-blue);
+      padding: 18px 24px;
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .station-header .name {
+      font-family: var(--serif);
+      color: var(--white);
+      font-size: 1.2rem;
+    }
+
+    .station-header .en {
+      font-size: .75rem;
+      color: rgba(255,255,255,.5);
+      letter-spacing: .08em;
+    }
+
+    .station-content {
+      padding: 22px 24px;
+    }
+
+    .station-content p {
+      font-size: .95rem;
+      color: var(--muted);
+      margin-bottom: 14px;
+      line-height: 1.85;
+    }
+
+    .ritual-box {
+      background: var(--nccu-light);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 6px 6px 0;
+      padding: 14px 18px;
+      margin-top: 4px;
+    }
+
+    .ritual-box .ritual-label {
+      font-size: .7rem;
+      letter-spacing: .14em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .ritual-box p {
+      margin: 0;
+      font-size: .9rem;
+      color: var(--nccu-blue);
+      font-style: italic;
+      line-height: 1.7;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      font-size: .7rem;
+      padding: 3px 10px;
+      border-radius: 99px;
+      border: 1px solid var(--nccu-mid);
+      color: var(--nccu-mid);
+      letter-spacing: .05em;
+    }
+
+    /* ── Route Map ── */
+    .map-container {
+      background: var(--white);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(27,58,92,.1);
+      margin-bottom: 40px;
+    }
+
+    .map-img-wrap {
+      width: 100%;
+      background: var(--nccu-pale);
+      display: flex;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .map-img-wrap img {
+      width: 100%;
+      display: block;
+      border-radius: 0;
+    }
+
+    /* ── Itinerary Table ── */
+    .itinerary {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .9rem;
+      margin-top: 8px;
+    }
+
+    .itinerary th {
+      background: var(--nccu-blue);
+      color: var(--gold);
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 600;
+      letter-spacing: .06em;
+      font-size: .8rem;
+    }
+
+    .itinerary td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--nccu-light);
+      vertical-align: top;
+      color: var(--muted);
+    }
+
+    .itinerary tr:last-child td { border-bottom: none; }
+    .itinerary tr:nth-child(even) td { background: var(--nccu-pale); }
+
+    .itinerary .time { color: var(--nccu-blue); font-weight: 600; white-space: nowrap; }
+
+    /* ── Info Cards ── */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .info-card {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 12px rgba(27,58,92,.07);
+    }
+
+    .info-card .icon { font-size: 1.5rem; margin-bottom: 8px; display: block; }
+    .info-card .info-label { font-size: .7rem; letter-spacing: .12em; color: var(--gold); margin-bottom: 6px; display: block; }
+    .info-card .info-value { color: var(--nccu-blue); font-size: .9rem; line-height: 1.6; }
+
+    /* ── Essay ── */
+    .essay {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 48px 40px;
+      box-shadow: 0 2px 20px rgba(27,58,92,.08);
+    }
+
+    .essay p {
+      font-size: 1rem;
+      line-height: 2;
+      color: var(--text);
+      margin-bottom: 20px;
+      text-align: justify;
+      text-justify: inter-character;
+    }
+
+    .essay p:last-child { margin-bottom: 0; }
+
+    .essay .pull-quote {
+      border-left: 3px solid var(--gold);
+      padding-left: 20px;
+      margin: 28px 0;
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: var(--nccu-blue);
+      line-height: 1.8;
+      font-style: italic;
+    }
+
+    /* ── Keepsake / Object ── */
+    .keepsake-band {
+      background: var(--nccu-blue);
+      padding: 64px 24px;
+      text-align: center;
+    }
+
+    .keepsake-band .inner {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .keepsake-band .section-label { color: var(--gold); }
+
+    .keepsake-band h2 {
+      font-family: var(--serif);
+      color: var(--white);
+      font-size: clamp(1.3rem, 4vw, 1.9rem);
+      margin-bottom: 20px;
+    }
+
+    .keepsake-band p {
+      color: rgba(255,255,255,.75);
+      margin-bottom: 32px;
+    }
+
+    .keepsakes {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .keepsake-item {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(200,169,110,.35);
+      border-radius: 8px;
+      padding: 16px 22px;
+      text-align: center;
+      width: 130px;
+    }
+
+    .keepsake-item .k-icon { font-size: 1.8rem; display: block; margin-bottom: 8px; }
+    .keepsake-item .k-name { color: var(--white); font-size: .85rem; line-height: 1.4; }
+
+    /* ── Closing ── */
+    .closing {
+      text-align: center;
+      padding: 80px 24px;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .closing .seal-large {
+      width: 100px;
+      height: 100px;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+      font-size: 2.5rem;
+    }
+
+    .closing h2 {
+      font-family: var(--serif);
+      color: var(--nccu-blue);
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .closing p {
+      color: var(--muted);
+      font-size: .95rem;
+      margin-bottom: 12px;
+      line-height: 1.9;
+    }
+
+    .closing .final-line {
+      font-family: var(--serif);
+      color: var(--nccu-blue);
+      font-size: 1.1rem;
+      margin-top: 28px;
+      font-style: italic;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--nccu-blue);
+      color: rgba(255,255,255,.5);
+      text-align: center;
+      padding: 24px;
+      font-size: .78rem;
+      letter-spacing: .06em;
+    }
+
+    footer span { color: var(--gold); }
+
+    /* ── Begin Button ── */
+    .btn-begin {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 32px;
+      background: var(--nccu-blue);
+      color: var(--gold);
+      border: 2px solid var(--gold);
+      border-radius: 8px;
+      font-size: 1.05rem;
+      font-family: var(--sans);
+      letter-spacing: .1em;
+      cursor: pointer;
+      transition: background .2s, color .2s, transform .15s;
+    }
+    .btn-begin:hover {
+      background: var(--gold);
+      color: var(--nccu-blue);
+      transform: translateY(-2px);
+    }
+
+    /* ── Pilgrimage Journey Overlay ── */
+    .pj-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10,18,30,.88);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(6px);
+    }
+    .pj-overlay.active { display: flex; }
+
+    .pj-progress {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 2010;
+    }
+    .pj-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.25);
+      border: 1.5px solid rgba(255,255,255,.3);
+      transition: background .3s, border-color .3s;
+    }
+    .pj-dot.active { background: var(--gold); border-color: var(--gold); }
+    .pj-dot.done   { background: rgba(200,169,110,.45); border-color: rgba(200,169,110,.45); }
+
+    .pj-close {
+      position: fixed;
+      top: 16px; right: 20px;
+      background: none;
+      border: 1px solid rgba(255,255,255,.3);
+      color: rgba(255,255,255,.6);
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      font-size: .85rem;
+      cursor: pointer;
+      z-index: 2010;
+      transition: background .2s, color .2s;
+    }
+    .pj-close:hover { background: rgba(255,255,255,.12); color: #fff; }
+
+    .pj-card {
+      background: var(--white);
+      border-radius: 14px;
+      overflow-y: auto;
+      max-width: 560px;
+      width: 100%;
+      max-height: 88vh;
+      box-shadow: 0 24px 70px rgba(0,0,0,.5);
+      animation: pjIn .3s ease;
+    }
+    @keyframes pjIn {
+      from { opacity: 0; transform: scale(.95) translateY(16px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .pj-station { display: none; }
+    .pj-station.active { display: block; }
+
+    .pj-photo-ph {
+      width: 100%; height: 210px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 8px;
+    }
+    .pj-ph-icon { font-size: 3rem; opacity: .8; }
+    .pj-ph-hint { font-size: .72rem; color: rgba(255,255,255,.5); letter-spacing: .08em; }
+
+    .pj-body { padding: 26px 26px 22px; }
+
+    .pj-num {
+      font-size: .7rem; letter-spacing: .16em;
+      color: var(--gold); display: block; margin-bottom: 6px;
+    }
+    .pj-title {
+      font-family: var(--serif);
+      font-size: 1.6rem; color: var(--nccu-blue);
+      margin-bottom: 12px; line-height: 1.3;
+    }
+    .pj-desc {
+      font-size: .94rem; color: var(--muted);
+      line-height: 1.85; margin-bottom: 18px;
+    }
+    .pj-ritual {
+      background: var(--nccu-light);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 6px 6px 0;
+      padding: 13px 16px; margin-bottom: 22px;
+    }
+    .pj-ritual-label {
+      font-size: .68rem; letter-spacing: .15em;
+      color: var(--gold); text-transform: uppercase;
+      display: block; margin-bottom: 7px;
+    }
+    .pj-ritual p {
+      font-size: .9rem; color: var(--nccu-blue);
+      font-style: italic; line-height: 1.75; margin: 0;
+    }
+    .pj-next-btn {
+      display: block; width: 100%;
+      padding: 14px;
+      background: var(--nccu-blue); color: var(--white);
+      border: none; border-radius: 8px;
+      font-size: .95rem; font-family: var(--sans);
+      letter-spacing: .06em; cursor: pointer;
+      transition: background .2s, transform .15s;
+    }
+    .pj-next-btn:hover { background: var(--nccu-mid); transform: translateY(-1px); }
+    .pj-final-btn {
+      background: var(--gold); color: var(--nccu-blue);
+      font-weight: 700; font-size: 1.05rem; letter-spacing: .1em;
+    }
+    .pj-final-btn:hover { background: #d4b070; }
+
+    /* ── Graduation Screen ── */
+    .pj-grad {
+      display: none; position: fixed; inset: 0;
+      background: var(--nccu-blue); z-index: 3000;
+      align-items: center; justify-content: center; padding: 40px 24px;
+    }
+    .pj-grad.active { display: flex; }
+    .pj-grad-inner { text-align: center; max-width: 480px; animation: pjIn .4s ease; }
+    .pj-grad-seal {
+      font-size: 5rem; display: block; margin-bottom: 24px;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    .pj-grad-inner h2 {
+      font-family: var(--serif); color: var(--gold);
+      font-size: clamp(2rem,6vw,3rem); margin-bottom: 20px;
+    }
+    .pj-grad-inner p { color: rgba(255,255,255,.8); font-size: 1rem; line-height: 1.9; margin-bottom: 14px; }
+    .pj-grad-quote {
+      font-family: var(--serif); font-style: italic;
+      color: rgba(255,255,255,.55) !important; font-size: .95rem !important; margin-bottom: 36px !important;
+    }
+    .pj-grad-close {
+      padding: 13px 28px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.3);
+      color: var(--white); border-radius: 8px;
+      font-size: .9rem; cursor: pointer; letter-spacing: .06em;
+      transition: background .2s;
+    }
+    .pj-grad-close:hover { background: rgba(255,255,255,.2); }
+
+    /* (old modal CSS removed — replaced by pj-overlay) */
+    .modal-overlay-unused {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15,25,40,.75);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+    }
+    .modal-overlay.active { display: flex; }
+
+    .modal {
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      max-width: 620px;
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0,0,0,.4);
+      animation: modalIn .25s ease;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(18px) scale(.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .modal-photo {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      display: block;
+      background: var(--nccu-light);
+      flex-shrink: 0;
+    }
+
+    /* Photo placeholder when no real image supplied */
+    .modal-photo-placeholder {
+      width: 100%;
+      height: 240px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--nccu-blue) 0%, var(--nccu-mid) 100%);
+      color: rgba(255,255,255,.6);
+      font-size: .85rem;
+    }
+    .modal-photo-placeholder .ph-icon { font-size: 3rem; opacity: .7; }
+    .modal-photo-placeholder .ph-hint { font-size: .75rem; letter-spacing: .08em; }
+
+    .modal-body {
+      padding: 28px 28px 24px;
+      overflow-y: auto;
+    }
+
+    .modal-station-num {
+      font-size: .7rem;
+      letter-spacing: .18em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .modal h3 {
+      font-family: var(--serif);
+      color: var(--nccu-blue);
+      font-size: 1.35rem;
+      margin-bottom: 4px;
+    }
+
+    .modal .modal-en {
+      font-size: .78rem;
+      color: var(--muted);
+      letter-spacing: .08em;
+      margin-bottom: 18px;
+      display: block;
+    }
+
+    .modal-section-title {
+      font-size: .72rem;
+      letter-spacing: .14em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .modal-desc {
+      font-size: .95rem;
+      color: var(--muted);
+      line-height: 1.85;
+      margin-bottom: 20px;
+    }
+
+    .modal-ritual {
+      background: var(--nccu-light);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 6px 6px 0;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+    }
+
+    .modal-ritual p {
+      font-size: .9rem;
+      color: var(--nccu-blue);
+      font-style: italic;
+      line-height: 1.75;
+      margin: 0;
+    }
+
+    .modal-steps {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 20px;
+    }
+
+    .modal-steps li {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 10px;
+      font-size: .9rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .modal-steps li .step-num {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      background: var(--nccu-blue);
+      color: var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .72rem;
+      font-weight: bold;
+      margin-top: 1px;
+    }
+
+    .modal-close {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: var(--nccu-blue);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      font-size: .9rem;
+      cursor: pointer;
+      letter-spacing: .08em;
+      transition: background .2s;
+    }
+    .modal-close:hover { background: var(--nccu-mid); }
+
+    /* photo upload hint inside modal */
+    .photo-upload-note {
+      font-size: .72rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    /* ── Responsive ── */
+    /* ── Mobile ── */
+    @media (max-width: 640px) {
+      /* Cover */
+      .cover { padding: 48px 20px 60px; }
+      .cover h1 { font-size: 1.9rem; }
+      .cover-meta { gap: 16px; }
+      .cover-meta-item .value { font-size: .88rem; }
+
+      /* Sections */
+      .section { padding: 48px 18px; }
+      .section h2 { font-size: 1.4rem; }
+
+      /* Begin button */
+      .btn-begin { width: 100%; justify-content: center; padding: 16px 20px; font-size: .98rem; }
+
+      /* Essay */
+      .essay { padding: 28px 18px; }
+
+      /* Itinerary table: hide last 2 cols, keep time/station/action */
+      .itinerary th:nth-child(4),
+      .itinerary td:nth-child(4),
+      .itinerary th:nth-child(5),
+      .itinerary td:nth-child(5) { display: none; }
+      .itinerary th, .itinerary td { padding: 10px 10px; font-size: .82rem; }
+
+      /* Info grid */
+      .info-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .info-card { padding: 14px; }
+      .info-card .info-value { font-size: .82rem; }
+
+      /* Keepsake band */
+      .keepsake-item { width: 110px; padding: 12px 10px; }
+
+      /* Map image */
+      .map-img-wrap img { min-height: 200px; object-fit: cover; }
+
+      /* Pilgrimage journey overlay */
+      .pj-overlay { padding: 0; align-items: flex-end; }
+      .pj-card {
+        border-radius: 18px 18px 0 0;
+        max-height: 92vh;
+        max-width: 100%;
+        width: 100%;
+      }
+      .pj-photo-ph,
+      .pj-photo-wrap img { height: 180px !important; }
+      .pj-body { padding: 20px 20px 28px; }
+      .pj-title { font-size: 1.35rem; }
+      .pj-desc { font-size: .9rem; }
+      .pj-next-btn { padding: 15px; font-size: .95rem; }
+      .pj-final-btn { font-size: 1rem; }
+
+      /* Progress dots: move below close btn */
+      .pj-progress { top: 14px; }
+      .pj-close { top: 12px; right: 14px; }
+
+      /* Graduation screen */
+      .pj-grad-seal { font-size: 4rem; }
+      .pj-grad-inner h2 { font-size: 2rem; }
+      .pj-grad-inner p { font-size: .92rem; }
+
+      /* Type cards */
+      .type-card { padding: 20px 18px; }
+
+      /* Intro band / keepsake band */
+      .intro-band { padding: 48px 20px; }
+      .keepsake-band { padding: 48px 20px; }
+      .keepsakes { gap: 10px; }
+    }
+
+    @media print {
+      .scroll-cue { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ COVER ═══════════════════════════════ -->
+<section class="cover">
+  <div class="cover-seal"><span>政</span></div>
+  <p class="cover-tag">National Chengchi University · Farewell Pilgrimage Guide</p>
+  <h1>山上的四年<br><span>政大畢業告別巡禮</span></h1>
+  <p class="cover-sub">
+    一條寫給即將離開的你的路線——<br>
+    重走第一次踏上山頭的腳步，帶著四年後的你，好好道別。
+  </p>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <span class="label">路線站數</span>
+      <span class="value">五站</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="label">建議時間</span>
+      <span class="value">半天（約 4 小時）</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="label">朝聖主題</span>
+      <span class="value">告別・記憶・轉化</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="label">象徵色彩</span>
+      <span class="value">政大森藍</span>
+    </div>
+  </div>
+  <div class="scroll-cue">開始朝聖</div>
+</section>
+
+<!-- ═══════════════════════════════ INTRO BAND ═══════════════════════════ -->
+<div class="intro-band">
+  <div class="inner">
+    <p class="section-label">關於這趟旅程</p>
+    <h2>這不是一場旅遊，<br>而是一次有意識的告別</h2>
+    <p>
+      朝聖的本質，是用身體走過一段賦予意義的路途。<br>
+      當你即將離開這座山頭，何不回到最初的路線——<br>
+      用四年後的眼睛，重新看見這一切，然後，輕輕放下。
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ TYPE SECTION ═══════════════════════════ -->
+<section class="section">
+  <p class="section-label">朝聖類型說明</p>
+  <h2>A ／ 這是什麼樣的朝聖？</h2>
+
+  <div class="type-card">
+    <h3>朝聖類型：精神性告別朝聖（Spiritual Farewell Pilgrimage）</h3>
+    <p>
+      此旅程屬於精神性與身體性兼具的告別朝聖。路線本身具有現實的地理空間（政大校園），
+      但意義層次超越觀光遊覽——它是一套刻意設計的儀式序列，引導即將畢業的朝聖者，
+      透過重複初入校園的身體動作，在熟悉的空間中完成一次心態上的過渡與轉化。
+    </p>
+  </div>
+
+  <div class="type-card">
+    <h3>核心主題：告別、記憶、身份轉化</h3>
+    <p>
+      這條路線的核心是「閾限（liminality）」——朝聖者站在「曾是學生」與「即將踏出校門」之間的界線上。
+      透過重走第一次來到政大的動線，同樣的空間被賦予了截然不同的情感重量。
+      每一站不只是地點，而是一面鏡子：反映你曾是誰，以及你已成為誰。
+    </p>
+  </div>
+
+  <div class="type-card">
+    <h3>象徵色彩：政大森藍 #1B3A5C</h3>
+    <p>
+      政大校徽的森藍，是深沉而不張揚的顏色——如山林，如深夜的圖書館，如四年來的每一個用力存在的瞬間。
+      手冊以此色為底，提醒朝聖者：你所走的每一步，都屬於這片深藍的記憶之地。
+    </p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════ STATIONS ═══════════════════════════════ -->
+<section class="section" id="pilgrimage-start">
+  <p class="section-label">站點設計</p>
+  <h2>B ／ 五個站點，五個告別</h2>
+  <p style="color:var(--muted);margin-bottom:32px;">這趟旅程有五個停留點，每一站都有屬於你的儀式。準備好了，就出發吧。</p>
+  <button class="btn-begin" onclick="startPilgrimage()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none"/></svg>
+    開始你的朝聖之旅
+  </button>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════ ROUTE MAP ═══════════════════════════════ -->
+<section class="section">
+  <p class="section-label">路線圖與行程規劃</p>
+  <h2>C ／ 完整路線地圖</h2>
+
+  <div class="map-container">
+    <div class="map-img-wrap">
+      <img src="螢幕擷取畫面 2026-06-10 214428.jpg" alt="政大畢業告別朝聖路線圖" />
+    </div>
+
+    <!-- Itinerary -->
+    <table class="itinerary">
+      <thead>
+        <tr>
+          <th>時間</th>
+          <th>站點</th>
+          <th>儀式行動</th>
+          <th>時長</th>
+          <th>交通</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="time">09:00</td>
+          <td>政大正門</td>
+          <td>駐足、冥想、緩步入門</td>
+          <td>15 分鐘</td>
+          <td>捷運木柵線政大站步行</td>
+        </tr>
+        <tr>
+          <td class="time">09:20</td>
+          <td>四維道</td>
+          <td>購食、漫步市集、感官記憶</td>
+          <td>45 分鐘</td>
+          <td>步行 5 分鐘</td>
+        </tr>
+        <tr>
+          <td class="time">10:10</td>
+          <td>綜合院館</td>
+          <td>找到舊教室、旁聽或靜坐</td>
+          <td>30 分鐘</td>
+          <td>步行 7 分鐘</td>
+        </tr>
+        <tr>
+          <td class="time">10:45</td>
+          <td>體育館</td>
+          <td>繞行一圈、環形告別儀式</td>
+          <td>20 分鐘</td>
+          <td>步行 5 分鐘</td>
+        </tr>
+        <tr>
+          <td class="time">11:10</td>
+          <td>自強宿舍</td>
+          <td>慢步上山、轉身望山下、道謝</td>
+          <td>40 分鐘</td>
+          <td>徒步上山（約 15 分鐘）</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <span class="icon">🗓</span>
+      <span class="info-label">建議時間</span>
+      <div class="info-value">清晨或上午<br>（9:00–13:00）<br>畢業典禮前後</div>
+    </div>
+    <div class="info-card">
+      <span class="icon">🚇</span>
+      <span class="info-label">交通方式</span>
+      <div class="info-value">捷運文湖線<br>政治大學站下車<br>全程步行完成</div>
+    </div>
+    <div class="info-card">
+      <span class="icon">👟</span>
+      <span class="info-label">穿著建議</span>
+      <div class="info-value">舒適球鞋<br>適合步行的衣著<br>（需爬坡上山）</div>
+    </div>
+    <div class="info-card">
+      <span class="icon">💰</span>
+      <span class="info-label">預估花費</span>
+      <div class="info-value">NT$ 100–300<br>（四維道飲食費）<br>交通費另計</div>
+    </div>
+    <div class="info-card">
+      <span class="icon">👥</span>
+      <span class="info-label">建議人數</span>
+      <div class="info-value">獨自 1 人<br>或好友 2–4 人<br>（靜默儀式請一人先完成）</div>
+    </div>
+    <div class="info-card">
+      <span class="icon">🌤</span>
+      <span class="info-label">天氣注意</span>
+      <div class="info-value">政大多雨<br>建議備傘<br>雨天亦可進行</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════ ESSAY ═══════════════════════════════ -->
+<section class="section">
+  <p class="section-label">說明文字</p>
+  <h2>D ／ 寫給即將離開的你</h2>
+  <div class="essay">
+    <p>
+      每個地方都有它的聖地，而聖地的形成，不在於神學的認可，而在於時間與身體的積累。
+      政治大學的校園並不神聖，至少在地理意義上不是——它是一片坐落於木柵指南山麓的學術機構，
+      有宿舍、有課室、有每天賣豬排飯的攤車和每學期期末都讓人焦慮的成績單。
+      然而，對於在這裡度過四年的你來說，這片空間早已不再只是地圖上的座標：
+      它是你的身體所熟記的路線，是你的情感所積澱的地景，是你的自我被形塑、被挑戰、被磨練的場所。
+      這就是為什麼，離開之前，值得為它設計一場朝聖。
+    </p>
+
+    <div class="pull-quote">
+      朝聖的本質，不是抵達某個神聖的彼岸，而是讓行走本身成為一種意義——讓你在路途中，
+      與自己的過去相遇，然後選擇如何帶著它繼續前行。
+    </div>
+
+    <p>
+      這條路線的設計邏輯，建立在「重複」的儀式力量上。朝聖學者 Victor Turner 提出了「閾限（liminality）」
+      的概念：在從一個身份過渡到另一個身份的過程中，人暫時脫離舊有的結構，進入一個「既不是這個、也不是那個」
+      的中間狀態。畢業前的你，正是身處於這樣的閾限之中——你還是政大學生，
+      但你同時已開始成為一個即將踏上社會的人。這趟旅程，正是為了讓這個過渡更加有意識、更加完整。
+    </p>
+
+    <p>
+      路線從正門開始，不是偶然。大門是最古老的過渡象徵——人類學家在幾乎所有文化中都發現，
+      進入神聖空間必須先通過一道門、一條橋、一條山路。政大正門的鐵柵與石墩，
+      在你第一次走進來的那天可能顯得平凡，但現在，它是你四年生命的入口符號。
+      在那裡停下來，不是為了拍一張好看的畢業照，而是為了讓自己的身體重新感受「進入」這個動作的重量。
+    </p>
+
+    <p>
+      四維道的設計，則源自一個充滿溫情的自嘲：我們常說政大不是政治大學，而是「市集大學」。
+      這句玩笑，其實包含了深刻的真理——市集是最民主的聚集形式，它讓不同科系、不同年級的人，
+      因為共同的需求（吃飯）而暫時共享一個空間。四維道的路邊攤車、季節性市集，
+      承載了你大學生涯中最平凡也最真實的記憶：那些「不知道要吃什麼」的下午，
+      那些邊吃邊聊、把一頓飯吃成兩小時的場景。在這裡買食物，是用最具身體性的方式——味覺——
+      呼喚記憶。Proust 的瑪德蓮蛋糕所告訴我們的正是這件事：身體的記憶，比理性的回憶更為深刻。
+    </p>
+
+    <p>
+      綜合院館是這趟旅程中「認識論的停頓」。這棟建築曾接收了你最重要的知識型構時刻：
+      第一次聽到某個改變了你世界觀的概念、第一次在課堂上鼓起勇氣發言、
+      第一次在考卷上寫下一個你真正思考過的答案。走回那些教室，不是為了懷舊，
+      而是為了對那個在知識上渴望成長的自己說一聲謝謝——感謝他的認真，感謝他的困惑，
+      感謝他在那些艱難的課堂上沒有放棄。
+    </p>
+
+    <p>
+      體育館的環繞儀式，借用了「circumambulation」這一普世性的宗教動作：在宗教場所繞行，
+      象徵對聖地的尊崇與一次精神的整合。跑一圈，不是體能測試，而是讓身體用最原始的語言——
+      移動——完成一個圓。一個完整的圓，象徵一個故事的閉合。你的汗水是告別的眼淚，
+      你的喘息是四年壓縮後的呼出，你停下來的那一刻，是你對自己說：「我準備好了。」
+    </p>
+
+    <p>
+      最後，是山。自強宿舍的山路，是政大學生之間最常被調侃也最被思念的地方。
+      第一次來的時候，你可能氣喘吁吁，心裡暗罵學校的選址；四年後的今天，
+      你的腿早已習慣了這段坡度，但心情，卻與當初天差地別。
+      慢慢走上去，讓腳步的節奏帶你思考：這四年，你爬過了哪些山？你翻越了什麼？
+      你又留下了什麼在這座山上？抵達山頂，轉身，讓你的眼睛第一次認真地看向山下的景色。
+      然後，對著這一切，用自己的方式道謝——無論是一句話、一次深呼吸，還是沉默。
+    </p>
+
+    <p>
+      這趟朝聖的終點不是離開，而是「準備好離開」。真正的告別，需要身體的參與，
+      需要空間的見證，需要時間的刻意暫停。當你走完這五站，你帶走的，
+      不只是政大的記憶，而是一種確認：你在這裡活過，你在這裡長大，
+      你在這裡成為了現在的自己。山還是那座山，校門還是那道門，
+      但走過它的那個你，已經徹底不同了。
+    </p>
+
+    <p>
+      這，就是朝聖的意義。
+    </p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════ KEEPSAKE ═══════════════════════════════ -->
+<div class="keepsake-band">
+  <div class="inner">
+    <p class="section-label">象徵儀式 ＆ 紀念物</p>
+    <h2>帶走什麼，留下什麼</h2>
+    <p>
+      朝聖者往往在旅途中攜帶某些物件，或在途中執行特定的行動，
+      讓旅程的意義得以具體化。以下是為這趟告別朝聖所設計的儀式配件。
+    </p>
+    <div class="keepsakes">
+      <div class="keepsake-item">
+        <span class="k-icon">📝</span>
+        <span class="k-name">朝聖日誌<br><small style="opacity:.7;font-size:.75rem">在各站寫下一個詞</small></span>
+      </div>
+      <div class="keepsake-item">
+        <span class="k-icon">🍱</span>
+        <span class="k-name">四維道食物<br><small style="opacity:.7;font-size:.75rem">味覺的記憶媒介</small></span>
+      </div>
+      <div class="keepsake-item">
+        <span class="k-icon">🪨</span>
+        <span class="k-name">山上的石子<br><small style="opacity:.7;font-size:.75rem">從自強帶走一粒土地</small></span>
+      </div>
+      <div class="keepsake-item">
+        <span class="k-icon">📸</span>
+        <span class="k-name">此刻的眼睛<br><small style="opacity:.7;font-size:.75rem">不拍照，只是看</small></span>
+      </div>
+      <div class="keepsake-item">
+        <span class="k-icon">✉️</span>
+        <span class="k-name">寫給四年前<br><small style="opacity:.7;font-size:.75rem">入學的自己一封信</small></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ CLOSING ═══════════════════════════════ -->
+<div class="closing">
+  <div class="seal-large">🏫</div>
+  <h2>謝謝你，<br>這四年的每一步</h2>
+  <p>
+    這趟旅程沒有終點，因為你帶走的，
+    會在你之後的每一步中繼續走下去。
+  </p>
+  <p>
+    政大的山頭，永遠是你的第一座山。
+  </p>
+  <p class="final-line">山上見，也山下見。<br>再見，政大。</p>
+</div>
+
+<!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
+<footer>
+  <span>國立政治大學・畢業告別巡禮手冊</span>
+  ・ 政大森藍 #1B3A5C ・ 2026 屆畢業生
+</footer>
+
+<!-- ═══════════════════════════════ PILGRIMAGE JOURNEY ═══════════════════════════════ -->
+<div class="pj-overlay" id="pj-overlay" role="dialog" aria-modal="true">
+  <!-- Progress dots -->
+  <div class="pj-progress" id="pj-progress">
+    <span class="pj-dot active" data-s="0"></span>
+    <span class="pj-dot" data-s="1"></span>
+    <span class="pj-dot" data-s="2"></span>
+    <span class="pj-dot" data-s="3"></span>
+    <span class="pj-dot" data-s="4"></span>
+  </div>
+
+  <!-- Cards -->
+  <div class="pj-card" id="pj-card">
+
+    <!-- Station 1 -->
+    <div class="pj-station active" data-idx="0">
+      <div class="pj-photo-wrap">
+        <img src="政大正門.jpg" alt="政大正門" style="width:100%;height:210px;object-fit:cover;display:block;" />
+      </div>
+      <div class="pj-body">
+        <span class="pj-num">Stop 一 · Main Gate</span>
+        <h2 class="pj-title">政大正門</h2>
+        <p class="pj-desc">每個故事都從同一扇門開始。這是你第一次踏進政大的地方——也許那天你迷路了，也許你帶著一種不知名的期待，也許你假裝鎮定，心裡其實在顫抖。</p>
+        <div class="pj-ritual">
+          <span class="pj-ritual-label">你的任務</span>
+          <p>在正門駐足至少五分鐘。不拍照，不滑手機。閉上眼睛，召喚第一次踏入的那個自己——然後像第一次那樣，慢慢走進去。</p>
+        </div>
+        <button class="pj-next-btn" onclick="nextStation()">
+          下一站：四維道 →
+        </button>
+      </div>
+    </div>
+
+    <!-- Station 2 -->
+    <div class="pj-station" data-idx="1">
+      <div class="pj-photo-wrap">
+        <img src="四維道.jpg" alt="四維道" style="width:100%;height:210px;object-fit:cover;display:block;" />
+      </div>
+      <div class="pj-body">
+        <span class="pj-num">Stop 二 · Si Wei Boulevard</span>
+        <h2 class="pj-title">四維道</h2>
+        <p class="pj-desc">政治大學？還是市集大學？這條路見證了你四年來無數次「今天要吃什麼」的生存哲學。市集從不詢問你的 GPA，它只問你今天想要什麼。</p>
+        <div class="pj-ritual">
+          <span class="pj-ritual-label">你的任務</span>
+          <p>去買一樣你在政大最喜歡、或第一次嘗試的食物。坐下來慢慢吃，不要邊滑手機——用味覺喚醒你的政大記憶。</p>
+        </div>
+        <button class="pj-next-btn" onclick="nextStation()">
+          下一站：綜合院館 →
+        </button>
+      </div>
+    </div>
+
+    <!-- Station 3 -->
+    <div class="pj-station" data-idx="2">
+      <div class="pj-photo-wrap">
+        <img src="綜合院館.jpg" alt="綜合院館" style="width:100%;height:210px;object-fit:cover;display:block;" />
+      </div>
+      <div class="pj-body">
+        <span class="pj-num">Stop 三 · General Building</span>
+        <h2 class="pj-title">綜合院館</h2>
+        <p class="pj-desc">這棟樓曾接收過你最無聊的下午、最緊張的期末考前夕，以及那次偷偷在課堂上睡著的黃金記憶。走廊的燈光、老師的聲音——這些細節你自己都不知道已經記住了。</p>
+        <div class="pj-ritual">
+          <span class="pj-ritual-label">你的任務</span>
+          <p>走到你曾上課的教室門口，靜靜站一會兒。讓自己想起那個位子、那個午後、那個你——然後向他說一句謝謝。</p>
+        </div>
+        <button class="pj-next-btn" onclick="nextStation()">
+          下一站：體育館 →
+        </button>
+      </div>
+    </div>
+
+    <!-- Station 4 -->
+    <div class="pj-station" data-idx="3">
+      <div class="pj-photo-wrap">
+        <img src="體育館.jpg" alt="體育館" style="width:100%;height:210px;object-fit:cover;display:block;" />
+      </div>
+      <div class="pj-body">
+        <span class="pj-num">Stop 四 · Gymnasium</span>
+        <h2 class="pj-title">體育館</h2>
+        <p class="pj-desc">身體是朝聖的媒介。跑圈是古老的圓形儀式——環繞聖地，象徵一次精神的整合與結束。用最原始的身體語言說：「我繞完了這一圈，我準備好離開了。」</p>
+        <div class="pj-ritual">
+          <span class="pj-ritual-label">你的任務</span>
+          <p>在田徑場跑或走一整圈。不計時，不比速度。讓政大的畫面在腦海中浮現、流過去。跑完後，停下來，深吸一口氣。</p>
+        </div>
+        <button class="pj-next-btn" onclick="nextStation()">
+          下一站：自強宿舍 →
+        </button>
+      </div>
+    </div>
+
+    <!-- Station 5 (final) -->
+    <div class="pj-station" data-idx="4">
+      <div class="pj-photo-wrap">
+        <img src="自強宿舍.jpg" alt="自強宿舍" style="width:100%;height:210px;object-fit:cover;display:block;" />
+      </div>
+      <div class="pj-body">
+        <span class="pj-num">Stop 五（終點）· Ziqiang Dormitory</span>
+        <h2 class="pj-title">自強宿舍</h2>
+        <p class="pj-desc">爬山這件事，從來不只是爬山。第一次走上來你也許氣喘吁吁；四年後的今天，你的腿力也許更好，但更重要的是，你的心不一樣了。</p>
+        <div class="pj-ritual">
+          <span class="pj-ritual-label">你的任務</span>
+          <p>從山腳下一步一步慢慢走上去，不搭車。到了宿舍門口，轉身，第一次認真看向山下的景色。然後用自己的方式說出那句話：「謝謝你，這四年。」</p>
+        </div>
+        <button class="pj-next-btn pj-final-btn" onclick="finishPilgrimage()">
+          🎓 你畢業了
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /pj-card -->
+
+  <!-- Close button (top-right) -->
+  <button class="pj-close" onclick="closePilgrimage()" aria-label="關閉">✕</button>
+</div>
+
+<!-- Graduation screen -->
+<div class="pj-grad" id="pj-grad">
+  <div class="pj-grad-inner">
+    <div class="pj-grad-seal">🎓</div>
+    <h2>你畢業了</h2>
+    <p>五站走完，這座山頭上的一切，<br>你已經好好地告別了。</p>
+    <p class="pj-grad-quote">山還是那座山，校門還是那道門，<br>但走過它的那個你，已經徹底不同了。</p>
+    <button class="pj-grad-close" onclick="closeGrad()">收起，繼續閱讀手冊</button>
+  </div>
+</div>
+
+<script>
+  /* ── Pilgrimage Journey ── */
+  let currentStation = 0;
+  const TOTAL = 5;
+
+  function startPilgrimage() {
+    currentStation = 0;
+    showStation(0);
+    document.getElementById('pj-overlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function showStation(idx) {
+    document.querySelectorAll('.pj-station').forEach((el, i) => {
+      el.classList.toggle('active', i === idx);
+    });
+    document.querySelectorAll('.pj-dot').forEach((dot, i) => {
+      dot.classList.toggle('active', i === idx);
+      dot.classList.toggle('done', i < idx);
+    });
+  }
+
+  function nextStation() {
+    if (currentStation < TOTAL - 1) {
+      currentStation++;
+      showStation(currentStation);
+      document.getElementById('pj-card').scrollTop = 0;
+    }
+  }
+
+  function finishPilgrimage() {
+    document.getElementById('pj-overlay').classList.remove('active');
+    document.getElementById('pj-grad').classList.add('active');
+  }
+
+  function closePilgrimage() {
+    document.getElementById('pj-overlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function closeGrad() {
+    document.getElementById('pj-grad').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  /* Keyboard: Esc closes overlay */
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closePilgrimage();
+      closeGrad();
+    }
+  });
+</script>
+
+</body>
+</html>
