@@ -558,6 +558,29 @@
       font-style: italic;
     }
 
+    /* ── QR Code Band ── */
+    .qr-band {
+      background: var(--nccu-blue);
+      padding: 56px 24px;
+      text-align: center;
+    }
+    .qr-inner { max-width: 320px; margin: 0 auto; }
+    .qr-box {
+      display: inline-block;
+      background: white;
+      padding: 12px;
+      border-radius: 10px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.3);
+      margin-bottom: 16px;
+    }
+    .qr-box img { display: block; border-radius: 4px; }
+    .qr-url {
+      font-size: .72rem;
+      color: rgba(255,255,255,.45);
+      letter-spacing: .05em;
+      word-break: break-all;
+    }
+
     /* ── Footer ── */
     footer {
       background: var(--nccu-blue);
@@ -1314,6 +1337,23 @@
     政大的山頭，永遠是你的第一座山。
   </p>
   <p class="final-line">山上見，也山下見。<br>再見，政大。</p>
+</div>
+
+<!-- ═══════════════════════════════ QR CODE ═══════════════════════════════ -->
+<div class="qr-band">
+  <div class="qr-inner">
+    <p class="section-label" style="color:var(--gold);">掃描進入</p>
+    <h2 style="font-family:var(--serif);color:var(--white);font-size:1.4rem;margin-bottom:8px;">政大朝聖之旅</h2>
+    <p style="color:rgba(255,255,255,.6);font-size:.85rem;margin-bottom:24px;">用手機掃描 QR Code，立即開始你的告別巡禮</p>
+    <div class="qr-box">
+      <img
+        src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&color=1B3A5C&bgcolor=FFFFFF&data=https%3A%2F%2Fgarytangtang2-bit.github.io%2Fnccu-pilgrimage"
+        alt="政大朝聖之旅 QR Code"
+        width="200" height="200"
+      />
+    </div>
+    <p class="qr-url">garytangtang2-bit.github.io/nccu-pilgrimage</p>
+  </div>
 </div>
 
 <!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
