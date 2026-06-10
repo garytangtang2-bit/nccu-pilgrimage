@@ -1346,11 +1346,7 @@
     <h2 style="font-family:var(--serif);color:var(--white);font-size:1.4rem;margin-bottom:8px;">政大朝聖之旅</h2>
     <p style="color:rgba(255,255,255,.6);font-size:.85rem;margin-bottom:24px;">用手機掃描 QR Code，立即開始你的告別巡禮</p>
     <div class="qr-box">
-      <img
-        src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&color=1B3A5C&bgcolor=FFFFFF&data=https%3A%2F%2Fgarytangtang2-bit.github.io%2Fnccu-pilgrimage"
-        alt="政大朝聖之旅 QR Code"
-        width="200" height="200"
-      />
+      <canvas id="qr-canvas"></canvas>
     </div>
     <p class="qr-url">garytangtang2-bit.github.io/nccu-pilgrimage</p>
   </div>
@@ -1542,5 +1538,26 @@
   });
 </script>
 
+<!-- QR Code generator (MIT, ~10KB, no external dependency once cached) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var canvas = document.getElementById('qr-canvas');
+    if (!canvas) return;
+    // Use QRCode library to draw onto a fresh div then move canvas
+    var container = document.createElement('div');
+    new QRCode(container, {
+      text: 'https://garytangtang2-bit.github.io/nccu-pilgrimage',
+      width: 200,
+      height: 200,
+      colorDark: '#1B3A5C',
+      colorLight: '#FFFFFF',
+      correctLevel: QRCode.CorrectLevel.H
+    });
+    // Replace placeholder canvas with the generated image
+    var qrBox = canvas.parentNode;
+    qrBox.replaceChild(container.firstChild, canvas);
+  });
+</script>
 </body>
 </html>
