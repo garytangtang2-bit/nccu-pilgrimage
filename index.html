@@ -718,6 +718,40 @@
       font-size: .9rem; color: var(--nccu-blue);
       font-style: italic; line-height: 1.75; margin: 0;
     }
+    /* ── Journal input ── */
+    .pj-journal-wrap {
+      background: var(--nccu-blue);
+      padding: 14px 18px 16px;
+    }
+    .pj-journal-label {
+      display: block;
+      font-size: .72rem;
+      letter-spacing: .1em;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .pj-journal {
+      width: 100%;
+      min-height: 80px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(200,169,110,.35);
+      border-radius: 6px;
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: .92rem;
+      line-height: 1.7;
+      padding: 10px 12px;
+      resize: vertical;
+      outline: none;
+      transition: border-color .2s, background .2s;
+      box-sizing: border-box;
+    }
+    .pj-journal::placeholder { color: rgba(255,255,255,.3); }
+    .pj-journal:focus {
+      border-color: var(--gold);
+      background: rgba(255,255,255,.12);
+    }
+
     .pj-next-btn {
       display: block; width: 100%;
       padding: 14px;
@@ -1375,6 +1409,10 @@
       <div class="pj-photo-wrap">
         <img src="政大正門.jpg" alt="政大正門" style="width:100%;height:210px;object-fit:cover;display:block;" />
       </div>
+      <div class="pj-journal-wrap">
+        <label class="pj-journal-label" for="journal-s0">✏️ 此刻，你想說什麼？</label>
+        <textarea class="pj-journal" id="journal-s0" placeholder="在這裡寫下你的感受、記憶、或一句話……" oninput="saveJournal('s0', this.value)"></textarea>
+      </div>
       <div class="pj-body">
         <span class="pj-num">Stop 一 · Main Gate</span>
         <h2 class="pj-title">政大正門</h2>
@@ -1393,6 +1431,10 @@
     <div class="pj-station" data-idx="1">
       <div class="pj-photo-wrap">
         <img src="四維道.jpg" alt="四維道" style="width:100%;height:210px;object-fit:cover;display:block;" />
+      </div>
+      <div class="pj-journal-wrap">
+        <label class="pj-journal-label" for="journal-s1">✏️ 此刻，你想說什麼？</label>
+        <textarea class="pj-journal" id="journal-s1" placeholder="在這裡寫下你的感受、記憶、或一句話……" oninput="saveJournal('s1', this.value)"></textarea>
       </div>
       <div class="pj-body">
         <span class="pj-num">Stop 二 · Si Wei Boulevard</span>
@@ -1413,6 +1455,10 @@
       <div class="pj-photo-wrap">
         <img src="綜合院館.jpg" alt="綜合院館" style="width:100%;height:210px;object-fit:cover;display:block;" />
       </div>
+      <div class="pj-journal-wrap">
+        <label class="pj-journal-label" for="journal-s2">✏️ 此刻，你想說什麼？</label>
+        <textarea class="pj-journal" id="journal-s2" placeholder="在這裡寫下你的感受、記憶、或一句話……" oninput="saveJournal('s2', this.value)"></textarea>
+      </div>
       <div class="pj-body">
         <span class="pj-num">Stop 三 · General Building</span>
         <h2 class="pj-title">綜合院館</h2>
@@ -1432,6 +1478,10 @@
       <div class="pj-photo-wrap">
         <img src="體育館.jpg" alt="體育館" style="width:100%;height:210px;object-fit:cover;display:block;" />
       </div>
+      <div class="pj-journal-wrap">
+        <label class="pj-journal-label" for="journal-s3">✏️ 此刻，你想說什麼？</label>
+        <textarea class="pj-journal" id="journal-s3" placeholder="在這裡寫下你的感受、記憶、或一句話……" oninput="saveJournal('s3', this.value)"></textarea>
+      </div>
       <div class="pj-body">
         <span class="pj-num">Stop 四 · Gymnasium</span>
         <h2 class="pj-title">體育館</h2>
@@ -1450,6 +1500,10 @@
     <div class="pj-station" data-idx="4">
       <div class="pj-photo-wrap">
         <img src="自強宿舍.jpg" alt="自強宿舍" style="width:100%;height:210px;object-fit:cover;display:block;" />
+      </div>
+      <div class="pj-journal-wrap">
+        <label class="pj-journal-label" for="journal-s4">✏️ 此刻，你想說什麼？</label>
+        <textarea class="pj-journal" id="journal-s4" placeholder="在這裡寫下你的感受、記憶、或一句話……" oninput="saveJournal('s4', this.value)"></textarea>
       </div>
       <div class="pj-body">
         <span class="pj-num">Stop 五（終點）· Ziqiang Dormitory</span>
@@ -1487,11 +1541,23 @@
   let currentStation = 0;
   const TOTAL = 5;
 
+  /* ── Journal persistence ── */
+  function saveJournal(id, value) {
+    localStorage.setItem('journal-' + id, value);
+  }
+  function loadJournals() {
+    ['s0','s1','s2','s3','s4'].forEach(function(id) {
+      var el = document.getElementById('journal-' + id);
+      if (el) el.value = localStorage.getItem('journal-' + id) || '';
+    });
+  }
+
   function startPilgrimage() {
     currentStation = 0;
     showStation(0);
     document.getElementById('pj-overlay').classList.add('active');
     document.body.style.overflow = 'hidden';
+    loadJournals();
   }
 
   function showStation(idx) {
